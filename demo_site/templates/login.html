@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}登录{% endblock %}
+{% block content %}
+<div class="auth-layout">
+  <section class="auth-card">
+    <p class="eyebrow">Account</p>
+    <h1>登录 DemoShop</h1>
+    <p class="muted">使用固定演示账号验证登录成功与失败路径。</p>
+
+    {% if error %}
+    <div class="alert error" role="alert">{{ error }}</div>
+    {% endif %}
+
+    <form action="/login" method="post" class="form-stack">
+      <input type="hidden" name="next" value="{{ next_url }}" />
+      <label for="username">用户名</label>
+      <input id="username" name="username" type="text" autocomplete="username" placeholder="请输入用户名" required />
+
+      <label for="password">密码</label>
+      <input id="password" name="password" type="password" autocomplete="current-password" placeholder="请输入密码" required />
+
+      <button type="submit" class="button primary">登录</button>
+    </form>
+
+    <p class="muted small">演示账号：demo / demo123</p>
+  </section>
+
+  <aside class="auth-aside">
+    <h2>测试提示</h2>
+    <ul>
+      <li>正确密码跳转到商品列表。</li>
+      <li>错误密码返回 400，页面显示错误提示。</li>
+      <li>登录后购物车与结算共享同一会话。</li>
+    </ul>
+    <a href="/products">先随便看看商品 →</a>
+  </aside>
+</div>
+{% endblock %}

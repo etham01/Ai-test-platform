@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}{{ product.name }}{% endblock %}
+{% block content %}
+<nav class="breadcrumb" aria-label="面包屑">
+  <a href="/">首页</a>
+  <span>/</span>
+  <a href="/products">商品列表</a>
+  <span>/</span>
+  <span>{{ product.name }}</span>
+</nav>
+
+<div class="detail-layout">
+  <div class="detail-visual">{{ product.category }}</div>
+  <div class="detail-body">
+    <p class="eyebrow">{{ product.category }}</p>
+    <h1>{{ product.name }}</h1>
+    <p class="price large">¥{{ "%.2f"|format(product.price) }}</p>
+    <p>{{ product.description }}</p>
+    <p class="muted">库存 {{ product.stock }} 件 · 商品编号 {{ product.id }}</p>
+
+    <form class="add-form" action="/cart/add" method="post">
+      <input type="hidden" name="product_id" value="{{ product.id }}" />
+      <label for="quantity">数量</label>
+      <input id="quantity" name="quantity" type="number" min="1" max="99" value="1" />
+      <button type="submit" class="button primary">加入购物车</button>
+    </form>
+
+    <p class="muted small">
+      加入购物车后可在 <a href="/cart">购物车</a> 中查看，并继续前往结算。
+    </p>
+  </div>
+</div>
+{% endblock %}

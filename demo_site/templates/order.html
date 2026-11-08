@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}订单确认{% endblock %}
+{% block content %}
+<section class="success-card">
+  <p class="eyebrow">Order confirmed</p>
+  <h1>订单提交成功</h1>
+  <p class="muted">订单号 <strong>#{{ order["id"] }}</strong>，感谢你的购买。</p>
+
+  <div class="panel">
+    <h2>订单详情</h2>
+    <ul class="summary-list">
+      {% for item in order["items"] %}
+      <li>
+        <span>{{ item.name }} × {{ item.quantity }}</span>
+        <span>¥{{ "%.2f"|format(item.subtotal) }}</span>
+      </li>
+      {% endfor %}
+    </ul>
+    <div class="summary-total">
+      <span>合计</span>
+      <strong>¥{{ "%.2f"|format(order["total"]) }}</strong>
+    </div>
+    <p class="muted">收货人：{{ order["full_name"] }} · {{ order["phone"] }}</p>
+    <p class="muted">地址：{{ order["address"] }}</p>
+  </div>
+
+  <a class="button primary" href="/products">继续购物</a>
+</section>
+{% endblock %}

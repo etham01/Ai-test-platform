@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}首页{% endblock %}
+{% block content %}
+<section class="hero">
+  <div>
+    <p class="eyebrow">本地演示商城</p>
+    <h1>为测试而生的 DemoShop</h1>
+    <p class="hero-copy">
+      固定商品数据、可重复的登录与购物流程，用于验证 SmartTest 的多页面采集、
+      测试用例生成和 Playwright 脚本执行。
+    </p>
+    <div class="actions">
+      <a class="button primary" href="/products">浏览商品</a>
+      <a class="button" href="/login">登录账户</a>
+    </div>
+  </div>
+  <div class="hero-panel" aria-label="测试账号">
+    <h2>演示账号</h2>
+    <p><span class="label">用户名</span><code>demo</code></p>
+    <p><span class="label">密码</span><code>demo123</code></p>
+    <p class="muted small">错误密码会返回 400 与错误提示，便于验证失败路径。</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-heading">
+    <h2>热门商品</h2>
+    <a href="/products">查看全部商品 →</a>
+  </div>
+  <div class="product-grid">
+    {% for product in featured %}
+    <article class="product-card">
+      <div class="product-thumb">{{ product.category }}</div>
+      <h3>{{ product.name }}</h3>
+      <p class="muted">{{ product.description }}</p>
+      <div class="product-meta">
+        <span class="price">¥{{ "%.2f"|format(product.price) }}</span>
+        <a class="button small" href="/products/{{ product.id }}">查看详情</a>
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-heading"><h2>测试场景</h2></div>
+  <div class="scenario-grid">
+    <a class="scenario-card" href="/login">
+      <strong>登录与错误密码</strong>
+      <span>验证表单、会话与错误提示。</span>
+    </a>
+    <a class="scenario-card" href="/products">
+      <strong>商品列表与详情</strong>
+      <span>验证链接、文本、价格与页面跳转。</span>
+    </a>
+    <a class="scenario-card" href="/cart">
+      <strong>购物车与结算</strong>
+      <span>验证数量、总价、登录态与订单确认。</span>
+    </a>
+    <a class="scenario-card" href="/about">
+      <strong>关于页面</strong>
+      <span>验证静态内容与多页面关系。</span>
+    </a>
+  </div>
+</section>
+{% endblock %}

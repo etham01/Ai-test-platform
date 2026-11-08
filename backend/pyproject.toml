@@ -1,0 +1,25 @@
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+src = ["app", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM"]
+# UP046 suggests PEP 695 generics; Pydantic/FastAPI generic response models are
+# kept on the well-tested `Generic[T]` form for now.
+ignore = ["B008", "UP046", "UP047"]
+
+[tool.ruff.format]
+quote-style = "double"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+pythonpath = ["."]
+markers = [
+  "integration: tests requiring MySQL/Redis/demo site",
+  "e2e: end-to-end tests requiring running services",
+]
+filterwarnings = [
+  "ignore::DeprecationWarning:pkg_resources",
+]

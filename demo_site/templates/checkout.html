@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}结算{% endblock %}
+{% block content %}
+<div class="page-heading">
+  <div>
+    <p class="eyebrow">Checkout</p>
+    <h1>确认订单</h1>
+    <p class="muted">登录用户：{{ user.display_name }}（{{ user.username }}）</p>
+  </div>
+  <a class="button" href="/cart">返回购物车</a>
+</div>
+
+<div class="checkout-layout">
+  <section class="panel">
+    <h2>收货信息</h2>
+    {% if error %}<div class="alert error" role="alert">{{ error }}</div>{% endif %}
+    <form action="/checkout" method="post" class="form-stack">
+      <label for="full_name">收货人</label>
+      <input id="full_name" name="full_name" type="text" placeholder="请输入收货人姓名" required />
+
+      <label for="address">收货地址</label>
+      <textarea id="address" name="address" rows="3" placeholder="请输入完整地址" required></textarea>
+
+      <label for="phone">联系电话</label>
+      <input id="phone" name="phone" type="tel" placeholder="请输入联系电话" required />
+
+      <button type="submit" class="button primary">提交订单</button>
+    </form>
+  </section>
+
+  <aside class="panel">
+    <h2>订单摘要</h2>
+    <ul class="summary-list">
+      {% for item in items %}
+      <li>
+        <span>{{ item.name }} × {{ item.quantity }}</span>
+        <span>¥{{ "%.2f"|format(item.subtotal) }}</span>
+      </li>
+      {% endfor %}
+    </ul>
+    <div class="summary-total">
+      <span>合计</span>
+      <strong>¥{{ "%.2f"|format(total) }}</strong>
+    </div>
+  </aside>
+</div>
+{% endblock %}

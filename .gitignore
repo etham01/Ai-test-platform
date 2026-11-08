@@ -1,0 +1,46 @@
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+
+# Environment / local secrets
+.env
+.env.*
+!.env.example
+.dev/
+tools/
+storage/*
+!storage/.gitkeep
+
+# Node / frontend
+node_modules/
+frontend/dist/
+frontend/node_modules/
+frontend/.vite/
+frontend/coverage/
+frontend/playwright-report/
+frontend/test-results/
+*.tsbuildinfo
+
+# Logs / reports / screenshots
+*.log
+logs/
+reports/
+screenshots/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# Generated runtime artifacts
+*.sqlite
+*.sqlite3

@@ -1,0 +1,42 @@
+# Development infrastructure only. The application processes run locally in
+# this repository (FastAPI, Celery worker, Vite). Docker is NOT installed on the
+# current machine, so this file is provided but has not been executed here.
+#
+# Do not run this while scripts/dev_services.sh is using ports 3307/6379.
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: smarttest-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: smarttest_root_dev
+      MYSQL_DATABASE: smarttest
+      MYSQL_USER: smarttest
+      MYSQL_PASSWORD: smarttest_dev_pw
+    ports:
+      - "3307:3306"
+    volumes:
+      - smarttest_mysql_data:/var/lib/mysql
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_0900_ai_ci
+      - --default-time-zone=+00:00
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-u", "root", "-psmarttest_root_dev"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  redis:
+    image: redis:7-alpine
+    container_name: smarttest-redis
+    command: ["redis-server", "--appendonly", "no", "--requirepass", "smarttest_redis_dev"]
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "smarttest_redis_dev", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+volumes:
+  smarttest_mysql_data:

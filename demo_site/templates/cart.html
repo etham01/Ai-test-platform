@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}购物车{% endblock %}
+{% block content %}
+<div class="page-heading">
+  <div>
+    <p class="eyebrow">Cart</p>
+    <h1>购物车</h1>
+  </div>
+  <a class="button" href="/products">继续购物</a>
+</div>
+
+{% if items %}
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>商品</th>
+        <th>单价</th>
+        <th>数量</th>
+        <th>小计</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in items %}
+      <tr>
+        <td><a href="/products/{{ item.id }}">{{ item.name }}</a></td>
+        <td>¥{{ "%.2f"|format(item.price) }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>¥{{ "%.2f"|format(item.subtotal) }}</td>
+        <td>
+          <form action="/cart/remove" method="post">
+            <input type="hidden" name="product_id" value="{{ item.id }}" />
+            <button type="submit" class="link-button">移除</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<div class="cart-summary">
+  <div>
+    <span class="muted">合计</span>
+    <strong class="price large">¥{{ "%.2f"|format(total) }}</strong>
+  </div>
+  <a class="button primary" href="/checkout">去结算</a>
+</div>
+{% else %}
+<div class="empty-state">
+  <h2>购物车还是空的</h2>
+  <p class="muted">从商品详情页加入商品，或先浏览商品列表。</p>
+  <a class="button primary" href="/products">浏览商品</a>
+</div>
+{% endif %}
+{% endblock %}

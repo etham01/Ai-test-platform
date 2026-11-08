@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}关于{% endblock %}
+{% block content %}
+<section class="prose">
+  <p class="eyebrow">About</p>
+  <h1>关于 DemoShop</h1>
+  <p>
+    DemoShop 是 SmartTest 项目的本地示例站点，用于验证多页面采集、元素提取、
+    测试用例生成与 Playwright 脚本执行。它不是生产电商系统，也不连接真实支付。
+  </p>
+  <h2>固定测试数据</h2>
+  <p>6 件商品、固定价格、固定库存；登录账号 demo / demo123；订单号从 1001 开始。</p>
+  <h2>与主平台解耦</h2>
+  <p>
+    本站点是独立的 FastAPI 进程，监听 127.0.0.1:8001，不共享 SmartTest 的
+    MySQL、Redis 或后端代码。SmartTest 只把它当作一个受控的目标站点。
+  </p>
+  <a class="button" href="/products">浏览商品</a>
+</section>
+{% endblock %}
